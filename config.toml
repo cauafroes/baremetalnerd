@@ -6,6 +6,10 @@ theme = "blowfish"
 # Bare Metal Nerd - Blowfish Homepage Configuration
 # ==============================================================================
 
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]
+
 [params]
   defaultAppearance = "dark"
   mainSections = ["posts"]
@@ -13,7 +17,7 @@ theme = "blowfish"
 [params.author]
   name = "Bare Metal Nerd"
   image = "esp.jpeg"
-  headline = "Microcontrollers • Recicling old Hardware • Embedded Systems • CiberSecurity"
+  headline = "Microcontrollers • Efficiency • Embedded Systems • CiberSecurity"
   bio = "Computing without breaking the bank"
   links = [
     { github = "https://github.com/cauafroes" },

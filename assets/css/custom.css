@@ -1,144 +1,299 @@
 /* ==========================================================================
-   1. Theme Variables (Respects Light vs Dark Mode)
+   1. Modern Theme Variables & Global Micro-Interactions
    ========================================================================== */
 
-/* Dark Mode (Dracula VS Code) */
+/* Universal Box Sizing to prevent width blowout */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+/* Dark Mode (Dracula / Modern Deep Dark) */
 html.dark {
   --color-neutral-900: #191a21;
   --color-neutral-800: #282a36; /* Body background */
   --color-neutral-700: #44475a; /* Surface / Cards */
   --color-neutral-600: #6272a4; /* Muted borders */
   --color-neutral-300: #f8f8f2; /* Text */
-  --color-neutral-100: #f8f8f2; /* Headings */
+  --color-neutral-100: #ffffff; /* Headings */
   --color-primary-500: #bd93f9; /* Dracula Purple */
   --color-primary-400: #ff79c6; /* Dracula Pink */
-  
-  --nav-bg: rgba(40, 42, 54, 0.85);
-  --nav-border: rgba(98, 114, 164, 0.4);
-  --nav-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.6);
+
+  --nav-bg: rgba(40, 42, 54, 0.75);
+  --nav-border: rgba(255, 255, 255, 0.08);
+  --nav-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.05);
+  --card-bg: rgba(68, 71, 90, 0.3);
+  --code-bg: rgba(255, 255, 255, 0.05);
 }
 
-/* Light Mode Clean Preset */
+/* Light Mode (Minimal Clean) */
 html:not(.dark) {
-  --nav-bg: rgba(255, 255, 255, 0.85);
-  --nav-border: rgba(226, 232, 240, 0.8);
-  --nav-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  --color-neutral-800: #f8fafc;
+  --nav-bg: rgba(255, 255, 255, 0.8);
+  --nav-border: rgba(0, 0, 0, 0.06);
+  --nav-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.05),
+                0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --card-bg: rgba(255, 255, 255, 0.7);
+  --code-bg: rgba(0, 0, 0, 0.04);
 }
 
-/* Base Body Background Target */
+/* Global Viewport & Body Protection */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   background-color: var(--color-neutral-800) !important;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+}
+
+/* Smooth selection highlight */
+::selection {
+  background-color: var(--color-primary-500);
+  color: #191a21;
 }
 
 /* ==========================================================================
-   2. Floating Pill Navbar & Page Padding
+   2. Sleek Floating Pill Navbar (Desktop Default)
    ========================================================================== */
 
-/* Pad the top of the page so content never overlaps the floating pill */
+/* Top padding on desktop for top navbar clearance */
 #content,
 main,
 section.page {
-  padding-top: 5rem !important;
+  padding-top: 5.5rem !important;
 }
 
-/* Collapse Blowfish's default height reservation box */
 header > div[class*="min-h-"] {
   min-height: 0px !important;
   height: 0px !important;
   padding: 0 !important;
 }
 
-/* Position and scale the pill outer wrapper */
 header div.fixed.top-0.inset-x-0 {
   position: fixed !important;
-  top: 1rem !important;
+  top: 1.25rem !important;
   left: 50% !important;
   right: auto !important;
   transform: translateX(-50%) !important;
-  width: calc(100% - 2rem) !important;
+  width: calc(100% - 2.5rem) !important;
   max-width: 860px !important;
   z-index: 100 !important;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Glassmorphism styling tied to active theme variables */
+/* Glassmorphism Pill Style */
 header div.fixed.top-0.inset-x-0 > div.relative {
   border-radius: 9999px !important;
-  background-color: var(--nav-bg) !important;
-  backdrop-filter: blur(16px) !important;
-  -webkit-backdrop-filter: blur(16px) !important;
+  background: var(--nav-bg) !important;
+  backdrop-filter: blur(20px) saturate(180%) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border: 1px solid var(--nav-border) !important;
   box-shadow: var(--nav-shadow) !important;
-  padding-left: 1.25rem !important;
-  padding-right: 1.25rem !important;
+  padding: 0.5rem 1.25rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
 }
 
-/* Hide background overlay behind the floating bar */
 #menu-blur {
   display: none !important;
 }
 
-/* ==========================================================================
-   3. Avatar Alignment in Header
-   ========================================================================== */
-
-/* Standardize avatar sizing & positioning next to title */
 .nav-avatar-img {
-  width: 2rem;
-  height: 2rem;
+  width: 2.25rem;
+  height: 2.25rem;
   border-radius: 9999px;
   object-fit: cover;
-  margin-right: 0.6rem;
-  display: inline-block;
-  vertical-align: middle;
+  margin-right: 0.75rem;
+  transition: transform 0.2s ease;
+}
+
+.nav-avatar-img:hover {
+  transform: scale(1.08);
 }
 
 /* ==========================================================================
-   4. Center Article & Single Post Container
+   3. Content Aesthetics, Typography & Anti-Overflow Rules
    ========================================================================== */
 
-/* Force main content wrappers to center horizontally */
+/* Main Container Layout with Desktop Margins & Safe Horizontal Padding */
 main,
 article,
 .max-w-prose,
 .max-w-full {
   margin-left: auto !important;
   margin-right: auto !important;
+  max-width: 100% !important;
+  padding-left: 1.25rem;
+  padding-right: 1.25rem;
 }
 
 .post-content {
-  max-width: 800px; /* or whatever width you prefer */
+  max-width: 760px;
   margin-left: auto;
-  margin-right: auto; /* margin: 0 auto; aligns it horizontally in the center */
+  margin-right: auto;
+  line-height: 1.75;
+  overflow-wrap: break-word; /* Prevents long string/URL overflow */
+  word-wrap: break-word;
+}
+
+/* Code Blocks & Tables - Safe Scroll with Inner Padding */
+article pre,
+.highlight,
+.post-content table {
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  display: block;
+  border-radius: 8px;
+}
+
+article img, 
+article svg, 
+article video {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 8px;
+}
+
+/* Styled Blockquotes */
+article blockquote {
+  border-left: 3px solid var(--color-primary-500) !important;
+  background: var(--card-bg);
+  padding: 1rem 1.5rem;
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+
+/* Styled Inline Code */
+article :not(pre) > code {
+  background-color: var(--code-bg) !important;
+  padding: 0.2rem 0.4rem !important;
+  border-radius: 6px !important;
+  font-size: 0.875em !important;
+  border: 1px solid var(--nav-border) !important;
+  word-break: break-word;
+}
+
+/* Cards & Article Listings */
+.article-card, article.rounded-xl {
+  border: 1px solid var(--nav-border) !important;
+  background-color: var(--card-bg) !important;
+  backdrop-filter: blur(10px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.article-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.3);
 }
 
 /* ==========================================================================
-   5. Mobile Enhancements (Screens under 768px)
+   4. Consolidated Responsive Mobile Optimization
    ========================================================================== */
 
-/* Fix horizontal screen overflow across mobile browsers */
-html, body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
 @media (max-width: 768px) {
-  /* 1. Prevent elements from expanding past the viewport */
-  body, main, article, section, div {
-    max-width: 100% !important;
-    box-sizing: border-box;
-  }
-
-  /* 2. Reposition page padding for bottom-anchored navbar */
+  /* Mobile Layout - Minimal top padding, tight horizontal padding */
   #content,
   main,
-  section.page {
-    padding-top: 1.5rem !important;
-    padding-bottom: 5rem !important; /* Space so bottom pill doesn't block content */
+  section.page,
+  article,
+  .max-w-prose,
+  .max-w-full {
+    padding-top: 1rem !important; /* Minimal top spacing since nav is at bottom */
+    padding-left: 0.5rem !important;
+    padding-right: 0.5rem !important;
   }
 
-  /* 3. Shift the Floating Pill Header to the Bottom */
+  /* Add clearance padding AFTER the footer so it scrolls above the bottom nav */
+  footer {
+    padding-bottom: 7rem !important;
+  }
+
+  /* Compact Mobile Line Spacing & Typography */
+  .post-content {
+    line-height: 1.5 !important;
+  }
+
+  .post-content p,
+  .post-content li {
+    margin-bottom: 0.75rem !important;
+  }
+
+  /* Anchor Pill Header to Bottom & Lock Boundaries */
   header div.fixed.top-0.inset-x-0 {
     top: auto !important;
     bottom: 1rem !important;
+    left: 50% !important;
+    right: auto !important;
+    transform: translateX(-50%) !important;
+    width: calc(100% - 1rem) !important;
+    max-width: calc(100vw - 1rem) !important;
+  }
+
+  /* Inner Pill Shell Constraints */
+  header div.fixed.top-0.inset-x-0 > div.relative {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0.35rem 0.75rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 0.5rem !important;
+    overflow: hidden !important; /* Clips flex children blowout */
+  }
+
+  /* --- Mobile Search Full-Width Morphing --- */
+
+  header div.fixed.top-0.inset-x-0:has(#search-input:focus),
+  header div.fixed.top-0.inset-x-0:has(.search-active) {
+    width: calc(100% - 0.75rem) !important;
+  }
+
+  /* Hide navigation elements on search focus */
+  header div.fixed.top-0.inset-x-0:has(#search-input:focus) .nav-items-wrapper,
+  header div.fixed.top-0.inset-x-0:has(#search-input:focus) .site-title,
+  header div.fixed.top-0.inset-x-0:has(#search-input:focus) .nav-avatar-img {
+    display: none !important;
+  }
+
+  /* Flexible search input wrapper */
+  header div.fixed.top-0.inset-x-0 #search-wrapper,
+  header div.fixed.top-0.inset-x-0 .search-container,
+  header div.fixed.top-0.inset-x-0 form[role="search"] {
+    flex: 1 1 0% !important;
+    min-width: 0 !important; /* Allows field to shrink below intrinsic width */
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    margin: 0 !important;
+  }
+
+  /* Input Field Styling */
+  #search-input,
+  header div.fixed.top-0.inset-x-0 input[type="search"] {
+    width: 100% !important;
+    min-width: 0 !important;
+    background: transparent !important;
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 0.25rem 0.4rem !important;
+    font-size: 0.875rem !important;
+    color: var(--color-neutral-300) !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Lock Theme Switcher from collapsing */
+  header div.fixed.top-0.inset-x-0 #appearance-switcher,
+  header div.fixed.top-0.inset-x-0 button[aria-label*="theme"] {
+    flex-shrink: 0 !important;
+    display: flex !important;
   }
 }
