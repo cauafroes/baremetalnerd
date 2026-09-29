@@ -1,0 +1,41 @@
+baseURL = 'https://baremetalnerd.com/'
+title = 'Bare Metal Nerd'
+theme = "blowfish"
+
+# ==============================================================================
+# Bare Metal Nerd - Blowfish Homepage Configuration
+# ==============================================================================
+
+[params]
+  defaultAppearance = "dark"
+  mainSections = ["posts"]
+
+[params.author]
+  name = "Bare Metal Nerd"
+  image = "esp.jpeg"
+  headline = "Microcontrollers • Recicling old Hardware • Embedded Systems • CiberSecurity"
+  bio = "Computing without breaking the bank"
+  links = [
+    { github = "https://github.com/cauafroes" },
+    { linkedin = "https://www.linkedin.com/in/caua-froes/" }
+  ]
+
+[params.header]
+  layout = "fixed"  # Options: "basic", "fixed", "fixed-fill", "fixed-fill-blur"
+
+[params.homepage]
+  # Layout options: "profile" (author bio header + posts), "hero", or "page"
+  layout = "profile"
+
+  # Title controls
+  showTitle = false
+  showAvatar = false
+  
+  # Recent posts configuration
+  showRecent = true
+  showRecentItems = 6
+  cardView = true            # Set to true for modern cards, false for terminal-style list
+  cardViewScreenWidth = false
+  
+  # Featured / Pinned posts section
+  showRecentOnlyFromMainSections = true
